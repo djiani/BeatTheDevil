@@ -46,9 +46,16 @@ function getGiphy(level){
         let timeInterval = setInterval(function(){
             document.getElementById('info').innerText = timer; 
             if(timer === 0){
-                document.getElementsByClassName("card").classList.add
                 clearInterval(timeInterval);
                 flipImage(Characters);
+                for(let i=0; i<Characters.length; i++){
+                    if(CharactersEvilIndex.includes(i)){
+                        document.getElementById("card_"+i).addEventListener("click", gameOver);
+                    }else{
+                        document.getElementById("card_"+i).addEventListener("click", gameplay);
+                    }
+                    
+                }
             }
             timer -=1;
         }, 1000);
@@ -72,9 +79,9 @@ function displayImages(data, devilIndex){
         //console.log(img);
         //return `<div class='cardImg'><img src="./images/${img}" class="imgSize"/></div>`
         if(devilIndex.includes(i)){
-            return `<div class='cardImg evil' id="cardBox_${i}"  ><img src="${img}" id="card_${i}" class="imgSize" data-index ="${i}" onclick="gameOver(event)"}/></div>`;
+            return `<div class='cardImg evil' id="cardBox_${i}" ><img src="${img}" id="card_${i}" class="imgSize" data-index ="${i}"}/></div>`;
         }else{
-            return `<div class='cardImg' id="cardBox_${i}" ><img src="${img}" id="card_${i}" class="imgSize" data-index ="${i}" onclick="gameplay(event)"}/></div>`;
+            return `<div class='cardImg' id="cardBox_${i}" ><img src="${img}" id="card_${i}" class="imgSize" data-index ="${i}" }/></div>`;
         }
         
     });
