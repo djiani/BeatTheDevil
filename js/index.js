@@ -19,11 +19,8 @@ function getGiphy(level){
         Characters = shuffle(CharactersImg);
         CharactersEvilIndex = [];
         //randomly pick position of devil card;
-        console.log("lenght before = ", Characters.length);
         let charLen = Characters.length + CharactersEvil.length;
-        console.log(charLen);
-        let indexEvil_ins = 0;
-        
+    
         while(CharactersEvilIndex.length < CharactersEvil.length){
             let indexEvil = Math.floor(Math.random()*(charLen));
              if(!CharactersEvilIndex.includes(indexEvil)){
@@ -44,7 +41,7 @@ function getGiphy(level){
         displayImages(Characters, CharactersEvilIndex);
         let timer = 5;
         let timeInterval = setInterval(function(){
-            document.getElementById('info').innerText = timer; 
+            document.getElementById('Timer').innerText = timer; 
             if(timer === 0){
                 clearInterval(timeInterval);
                 flipImage(Characters);
@@ -139,3 +136,17 @@ function gameOver(){
     }, 500);
    
 }
+
+
+
+
+
+/* Set the width of the side navigation to 250px */
+function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+  }
+  
+  /* Set the width of the side navigation to 0 */
+  function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+  }

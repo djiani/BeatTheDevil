@@ -7,16 +7,71 @@
     <link rel="stylesheet" href="./css/style.css">
   
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <title>Beat the Evil</title>
 </head>
 <body>
+        <!-- <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+             Brand -->
+                <!-- <a class="navbar-brand" href="#">Checkers</a> -->
+        
+                <!-- Toggler/collapsibe Button -->
+                <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button> -->
+        
+                <!-- Navbar links -->
+                <!-- <div class="collapse navbar-collapse " id="collapsibleNavbar">
+                        <ul class="nav justify-content-center">
+                                <li class="nav-item">
+                                        <a class="nav-link" href="#" id="Game_Options">Stats</a>
+                                </li>
+                    
+                            </ul>
+                    <ul class="nav justify-content-end">
+                        <li class="nav-item">
+                                <a class="nav-link" href="#" id="Game_Options">Stats</a>
+                        </li>
+                        <li class="nav-item">
+                                <a class="nav-link" href="#" id="Game_Options">help</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="Game_Options" onclick="openNav()">Options</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </nav> -->
+
+
+
+
+
+            <div id="mySidenav" class="sidenav">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                    <a href="#">About</a>
+                    <a href="#">Services</a>
+                    <a href="#">Clients</a>
+                    <a href="#">Contact</a>
+                  </div>        
+
     <div class="container">
+        
+
         <div id="info">
+                <div class="leftSide">
+                        <h1><span class="badge badge-light"> Level 1</span></h1>
+                </div>
+            <div class="GameStats">
+                    <h1><span class="badge badge-light"> Timer <span id="Timer"> 0 </span></span></h1>
 
-            
+            </div>
+            <div class="rightSide" onclick="openNav()">
+                <button class="btn_setting"><i class="fa fa-cog"></i> Settings</button>
+            </div>
         </div>
-
+        
         <div id="main">
            
 
