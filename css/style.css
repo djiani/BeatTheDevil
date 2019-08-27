@@ -49,20 +49,31 @@ body{
     
 }
 
+
 .cardImg{
-    padding: 10px;
-    width: 150px;
-    height: 150px;
+    width: 100px;
+    height: 100px;
     float: left;
-    border: 1px solid black; 
-    border-radius: 10px;
+    border-radius: 15px;
     margin: 10px;
     
+}
+
+.cardImg:hover{
+  animation-duration: 2s;
+  animation-delay: 1s;
 }
 
 .imgSize{
     width: 100%;
     height: 100%;
+    border-radius: 15px;
+}
+
+.animatedCard{
+    animation-duration: 2s; 
+    /* animation-delay: 1s; */
+    
 }
 
 .evil{
@@ -73,12 +84,13 @@ body{
 
 /* The side navigation menu */
 .sidenav {
+    padding: 10px;
     height: 100%; /* 100% Full-height */
     width: 0; /* 0 width - change this with JavaScript */
     position: fixed; /* Stay in place */
     z-index: 1; /* Stay on top */
     top: 0; /* Stay at the top */
-    right: 0;
+    right: 1px;
     background-color: #111; /* Black*/
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 60px; /* Place content 60px from the top */

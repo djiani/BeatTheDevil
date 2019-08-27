@@ -1,83 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="./css/style.css">
-  
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
 
     <title>Beat the Evil</title>
 </head>
-<body>
-        <!-- <nav class="navbar navbar-expand-md bg-dark navbar-dark">
-             Brand -->
-                <!-- <a class="navbar-brand" href="#">Checkers</a> -->
-        
-                <!-- Toggler/collapsibe Button -->
-                <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-                    <span class="navbar-toggler-icon"></span>
-                </button> -->
-        
-                <!-- Navbar links -->
-                <!-- <div class="collapse navbar-collapse " id="collapsibleNavbar">
-                        <ul class="nav justify-content-center">
-                                <li class="nav-item">
-                                        <a class="nav-link" href="#" id="Game_Options">Stats</a>
-                                </li>
-                    
-                            </ul>
-                    <ul class="nav justify-content-end">
-                        <li class="nav-item">
-                                <a class="nav-link" href="#" id="Game_Options">Stats</a>
-                        </li>
-                        <li class="nav-item">
-                                <a class="nav-link" href="#" id="Game_Options">help</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" id="Game_Options" onclick="openNav()">Options</a>
-                        </li>
-                        
-                    </ul>
-                </div>
-            </nav> -->
+
+<body id="bodyId">
+    
+
+    
+    <div id="mySidenav" class="sidenav">
+        <a href="" class="closebtn" onclick="closeNav()">&times;</a>
 
 
+        <h3>Game Settings</h3>
+        <hr>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Background</span>
+            </div>
+            <select class="form-control" id="BackgroundImg" name="Background">
+            </select>
+        </div>
 
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Characters</span>
+            </div>
+            <select class="form-control" id="CharacterOption" name="CharacterOption">
+                
+            </select>
+        </div>
 
-
-            <div id="mySidenav" class="sidenav">
-                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-                    <a href="#">About</a>
-                    <a href="#">Services</a>
-                    <a href="#">Clients</a>
-                    <a href="#">Contact</a>
-                  </div>        
+        <a href="#">Services</a>
+        <a href="#">Clients</a>
+        <a href="#">Contact</a>
+    </div>
 
     <div class="container">
-        
+
 
         <div id="info">
-                <div class="leftSide">
-                        <h1><span class="badge badge-light"> Level 1</span></h1>
-                </div>
+            <div class="leftSide">
+                <h1><span class="badge badge-light"> Level  <span class="badge badge-success  animated infinite bounce delay-2s"> 1</span></span></h1>
+            </div>
             <div class="GameStats">
-                    <h1><span class="badge badge-light"> Timer <span id="Timer"> 0 </span></span></h1>
+                <h1><span class="badge badge-light"> Timer <span id="Timer"> 0 </span></span></h1>
 
             </div>
             <div class="rightSide" onclick="openNav()">
                 <button class="btn_setting"><i class="fa fa-cog"></i> Settings</button>
             </div>
         </div>
-        
+
         <div id="main">
-           
+            <h1>Welcome my friend to the world of Evil!</h1>
+                <p> Could you be smart enough to beat the devil?</p>
+                <p> Here is the only rules. Play like you want but the reveil the devil!</p>
 
         </div>
-        
+
     </div>
+
+    <audio id="WinSound">
+        <source src="sounds/rightAnswer.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="LooseSound">
+        <source src="sounds/wrongAnswer.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="clapSound">
+        <source src="sounds/clap3.mp3" type="audio/mpeg">
+    </audio>
+
+
+    <!-- The Modal -->
+  <div class="modal" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Modal Heading</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+          Modal body..
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
 
 
     <script src="./js/index.js"></script>
@@ -85,4 +113,5 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
+
 </html>
