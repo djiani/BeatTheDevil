@@ -27,21 +27,26 @@ let gameScore = 0;
 let gameLevel = 1;
 let gameCharacter = "dog";
 
+document.getElementById("bodyId").onload = function(){
+    
+    //setup background image option
+    let optionImg = backgroundImage.map(backImg => {
+        return `<option value=${backImg.url}>${backImg.name}</option>`;
+    });
+    document.getElementById("BackgroundImg").innerHTML= optionImg.join(" ");
+
+    let optionChar = charactersList.map(char => {
+        return `<option value=${char}>${char}</option>`;
+    });
+
+    document.getElementById("CharacterOption").innerHTML = optionChar.join(" ");
+
+}
+
+
 function getGiphy(level, character){
     console.log('character test: ', character);
-    if(level == 1){
-        //setup background image option
-        let optionImg = backgroundImage.map(backImg => {
-            return `<option value=${backImg.url}>${backImg.name}</option>`;
-        });
-        document.getElementById("BackgroundImg").innerHTML= optionImg.join(" ");
-
-        let optionChar = charactersList.map(char => {
-            return `<option value=${char}>${char}</option>`;
-        });
-
-        document.getElementById("CharacterOption").innerHTML = optionChar.join(" ");
-    }
+    
     const promiseImg = [search(level*3 + 5, character), search(level*2, 'devil')]
     Promise.all(promiseImg)
     .then(data => {
@@ -95,6 +100,16 @@ function getGiphy(level, character){
 
 }
 
+
+function gameStarter(){
+    document.getElementById("StartGameBtn").onclick = function(){
+        // let current_char = getElementById()
+        getGiphy(gameLevel, gameCharacter);
+    }
+}
+
+gameStarter();
+
 function search(num, query){
     return fetch(url+query+"&limit="+num)
     .then(response => response.json());
@@ -111,9 +126,9 @@ function displayImages(data, devilIndex){
         //console.log(img);
         //return `<div class='cardImg'><img src="./images/${img}" class="imgSize"/></div>`
         if(devilIndex.includes(i)){
-            return `<div class='cardImg evil animated  fadeInUpBig delay-1s' id="cardBox_${i}"  ><img src="${img}" id="card_${i}" class="imgSize" data-index ="${i}"}/></div>`;
+            return `<div class='cardImg evil animated  fadeInUpBig fast' id="cardBox_${i}"  ><img src="${img}" id="card_${i}" class="imgSize" data-index ="${i}"}/></div>`;
         }else{
-            return `<div class='cardImg animated rollIn  faster' id="cardBox_${i}"><img src="${img}" id="card_${i}" class="imgSize" data-index ="${i}" }/></div>`;
+            return `<div class='cardImg animated rollIn  fast' id="cardBox_${i}"><img src="${img}" id="card_${i}" class="imgSize" data-index ="${i}" }/></div>`;
         }
         
     });
@@ -201,6 +216,7 @@ function openNav() {
 
   //speech synthesis!!!
 
+  
 
   const synth = window.speechSynthesis;
 
@@ -232,8 +248,17 @@ document.getElementById("CharacterOption").onchange = function(event){
     console.log(gameCharacter);
 }
 
+var typed = new Typed('#typed', {
+    stringsElement: '#typed-strings',
+    typeSpeed: 50,
+    loop: true,
+    loopCount: Infinity,
 
+    // fadeOut: true,
+    // fadeOutClass: 'typed-fade-out',
+    // fadeOutDelay: 500,
+  });
 
 
 //start the game
-getGiphy(gameLevel, gameCharacter);
+//getGiphy(gameLevel, gameCharacter);

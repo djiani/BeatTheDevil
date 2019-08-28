@@ -34,20 +34,35 @@ body{
     text-align: right;
     float: right;
 }
-
-.btn_setting{
-    text-decoration: none;
-    border: none;
-    background-color: white;
+.btn{
+  font-weight: bolder;
+  font-size: 1.2rem;
 }
 
 
 #main{
-    background-color: azure;
     width: 80vw;
-    margin: 0 auto;
+    height: 100%;
+    margin: 20px auto;
+    padding: 20px;
+    text-align: center;
     
 }
+
+.Description{
+  margin: 0 auto;
+  padding: 20px;
+  background-color:azure;
+
+}
+
+.DivstartGame, .Description{
+  margin:20px auto;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bolder;
+}
+
 
 
 .cardImg{
@@ -90,7 +105,7 @@ body{
     position: fixed; /* Stay in place */
     z-index: 1; /* Stay on top */
     top: 0; /* Stay at the top */
-    right: 1px;
+    right: 0;
     background-color: #111; /* Black*/
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 60px; /* Place content 60px from the top */
@@ -120,6 +135,8 @@ body{
     font-size: 36px;
     margin-left: 50px;
   }
+
+  
   
   /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
   /* #main {
