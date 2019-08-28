@@ -120,6 +120,7 @@ function search(num, query){
 
 
 
+
 function displayImages(data, devilIndex){
     
     let listImg = data.map((img, i) => {
@@ -174,15 +175,22 @@ function gameplay(event){
         gameLevel += 1;
         // alert("you win! ready for next level"+gameLevel);
         setTimeout(function(){
-            alert("you win! ready for next level"+gameLevel);
+            $("#modal_btn").text("Continue");
+            $("#modal_title").text("Good Job!!!!");
+            $("#modal_body").text("You beat the Devil. You are ready for the next step! \n\n Click Continue to go to");
             $("#myModal").modal({backdrop: true});
+            $("#level").text(gameLevel);
             gameScore = 0;
-            getGiphy(gameLevel, gameCharacter);
+            $("#modal_btn").on("click", function(){
+                $("#myModal").modal("hide");
+                getGiphy(gameLevel, gameCharacter);
+            });
         }, 500);
         //getGiphy(gameLevel);
     }
     
 }
+
 
 function gameOver(){
     let id = event.target.getAttribute("data-index");
@@ -191,10 +199,17 @@ function gameOver(){
     
     setTimeout(function(){
         speak(looser);
-        
+        $("#modal_btn").text("Try Again!");
+        $("#modal_title").text("You Loose!");
+        $("#modal_body").text("You have been catch by the devil!\n Sorry you can't move to the next step\n\n try again and don't click of the devil");
         $("#myModal").modal({backdrop: true});
         gameScore = 0;
-        getGiphy(gameLevel, gameCharacter);
+        //clearTimeout(gameOverTimeout);
+        $("#modal_btn").on("click", function(){
+            $("#myModal").modal("hide");
+            getGiphy(gameLevel, gameCharacter);
+        });
+                
     }, 500);
    
 }
