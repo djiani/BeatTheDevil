@@ -33,6 +33,7 @@ let gameCharacter = "dog";
 let voiceCharacter = 0;
 let timerFlag = false;
 let GameTimerInterval = null;
+let timeInterval = null;
 //speech synthesis!!!
 
 
@@ -51,12 +52,14 @@ document.getElementById("bodyId").onload = function () {
     document.getElementById("CharacterOption").innerHTML = optionChar.join(" ");
     populateVoiceList();
 
-    
+
 }
 
 
 function getGiphy(level, character) {
     //console.log('character test: ', character);
+    stopTimer();// clear the GameTimerInterval variable.
+    clearInterval(timeInterval); // clear timeInterval before a new game starts.  
     document.getElementById("timerLabel").innerText = "Game starts in : ";
     document.getElementById("timerBox").style.display = "block";
     const promiseImg = [search(level * 3 + 5, character), search(level * 2, 'devil')];
@@ -73,7 +76,7 @@ function getGiphy(level, character) {
             while (CharactersEvilIndex.length < CharactersEvil.length) {
                 let indexEvil = Math.floor(Math.random() * (charLen));
                 if (!CharactersEvilIndex.includes(indexEvil)) {
-                    console.log("indexEvil= ", indexEvil);
+                    //console.log("indexEvil= ", indexEvil);
                     CharactersEvilIndex.push(indexEvil);
                 }
             }
@@ -89,18 +92,20 @@ function getGiphy(level, character) {
 
             displayImages(Characters, CharactersEvilIndex);
             let timer = 5;
-            let timeInterval = setInterval(function () {
+             timeInterval = setInterval(function () {
+        
+                 console.log("timer: "+ timer);
                 document.getElementById('Timer').innerText = timeConverter(timer);
                 if (timer === 0) {
-                    if(!timerFlag){
+                    clearInterval(timeInterval);
+                    if (!timerFlag) {
                         document.getElementById("timerBox").style.display = "none";
-                    }else{
+                    } else {
                         document.getElementById("timerLabel").innerText = "Timer: ";
-                        //startTimer(level*2+3);
+                        startTimer(level*2+3);
                         //rememeber to clock to the timer when win, lost or restart by clearing
                     }
-                    
-                    clearInterval(timeInterval);
+
                     flipImage(Characters);
                     for (let i = 0; i < Characters.length; i++) {
                         if (CharactersEvilIndex.includes(i)) {
@@ -116,19 +121,19 @@ function getGiphy(level, character) {
 
         })
 
-
-
 }
 
 
+/* --- start game on  StartGameBtn click event */
 function gameStarter() {
     document.getElementById("StartGameBtn").onclick = function () {
         // let current_char = getElementById()
         getGiphy(gameLevel, gameCharacter);
     }
 }
-
 gameStarter();
+
+
 
 function search(num, query) {
     return fetch(url + query + "&limit=" + num)
@@ -186,52 +191,57 @@ function gameplay(event) {
     gameScore++;
     document.getElementById("clapSound").play();
     //number of devil per level is gameLevel*2+1;
-    console.log("gameScore= ", gameScore, " Charac = ", Characters.length, " evil= ", CharactersEvilIndex.length);
+    //console.log("gameScore= ", gameScore, " Charac = ", Characters.length, " evil= ", CharactersEvilIndex.length);
     if (gameScore === (Characters.length - CharactersEvilIndex.length)) {
         gameLevel += 1;
-        document.getElementById("WinSound").play();
-        synthSpeak("Congratulation, you kill it! Click on continue to go to level " + gameLevel);
-        // alert("you win! ready for next level"+gameLevel);
-        setTimeout(function () {
-            $("#modal_btn").text("Continue");
-            $("#modal_title").text("Good Job!!!!");
-            $("#modal_body").text("You beat the Devil. You are ready for the next step! \n\n Click Continue to go to level " + gameLeve);
-            $("#myModal").modal({ backdrop: true });
-            $("#level").text(gameLevel);
-            gameScore = 0;
-            $("#modal_btn").on("click", function () {
-                $("#myModal").modal("hide");
-                getGiphy(gameLevel, gameCharacter);
-            });
-        }, 500);
-        //getGiphy(gameLevel);
+        userWin();
     }
 
+}
+
+function userWin() {
+    stopTimer();
+    clearInterval(timeInterval);
+    document.getElementById("WinSound").play();
+    synthSpeak("Congratulation, you kill it! Click on continue to go to level " + gameLevel);
+    $("#modal_btn").text("Continue");
+    $("#modal_title").text("Good Job!!!!");
+    $("#modal_body").text("You beat the Devil. You are ready for the next step! \n\n Click Continue to go to level " + gameLevel);
+    $("#myModal").modal({ backdrop: true });
+    $("#level").text(gameLevel);
+    gameScore = 0;
+    $("#modal_btn").on("click", function () {
+        $("#myModal").modal("hide");
+        getGiphy(gameLevel, gameCharacter);
+    });
+    // }, 500);
 }
 
 /*---------------------------- gameOver  function -----------------*/
 function gameOver() {
     let id = event.target.getAttribute("data-index");
     document.getElementById("card_" + Number(id)).src = Characters[Number(id)];
-    document.getElementById("LooseSound").play();
-
-    //setTimeout(function () {
-        synthSpeak("You must start running because the devil is after you! or click on try again to beat the Devil!");
-        $("#modal_btn").text("Try Again!");
-        $("#modal_title").text("You Loose!");
-        $("#modal_body").text("You have been catch by the devil!\n Sorry you can't move to the next step\n\n try again and don't click of the devil");
-        $("#myModal").modal({ backdrop: true });
-        gameScore = 0;
-        //clearTimeout(gameOverTimeout);
-        $("#modal_btn").on("click", function () {
-            $("#myModal").modal("hide");
-            getGiphy(gameLevel, gameCharacter);
-        });
-
-    //}, 500);
+    userLost();
 
 }
 
+function userLost() {
+    stopTimer();
+    clearInterval(timeInterval);
+    document.getElementById("LooseSound").play();
+    //setTimeout(function () {
+    synthSpeak("You must start running because the devil is after you! or click on try again to beat the Devil!");
+    $("#modal_btn").text("Try Again!");
+    $("#modal_title").text("You Loose!");
+    $("#modal_body").text("You have been catch by the devil!\n Sorry you can't move to the next step\n\n try again and don't click of the devil");
+    $("#myModal").modal({ backdrop: true });
+    gameScore = 0;
+    //clearTimeout(gameOverTimeout);
+    $("#modal_btn").on("click", function () {
+        $("#myModal").modal("hide");
+        getGiphy(gameLevel, gameCharacter);
+    });
+}
 
 
 
@@ -251,7 +261,7 @@ const synth = window.speechSynthesis;
 
 //Synthesys speak function
 //@param message: text to speak out 
-function  synthSpeak(message) {
+function synthSpeak(message) {
     var msg = new SpeechSynthesisUtterance();
     var voices = window.speechSynthesis.getVoices();
     msg.voice = voices[voiceCharacter];
@@ -261,27 +271,27 @@ function  synthSpeak(message) {
 
 
 //generate voices options. retrieve only english voices  
-  function populateVoiceList() {
+function populateVoiceList() {
     let voices = synth.getVoices();
     //console.log("voices="+voices.length);
-    for(let i = 0; i < voices.length ; i++) {
-        if(voices[i].lang.includes("en")){
+    for (let i = 0; i < voices.length; i++) {
+        if (voices[i].lang.includes("en")) {
             var option = document.createElement('option');
             option.textContent = voices[i].name + ' (' + voices[i].lang + ')';
 
-            if(voices[i].default) {
+            if (voices[i].default) {
                 option.textContent += ' -- DEFAULT';
-              }
-        
-              option.setAttribute('data-lang', voices[i].lang);
-              option.setAttribute('data-name', voices[i].name);
-              option.setAttribute('value', i);
-              document.getElementById("voiceOption").appendChild(option);
-         } 
+            }
+
+            option.setAttribute('data-lang', voices[i].lang);
+            option.setAttribute('data-name', voices[i].name);
+            option.setAttribute('value', i);
+            document.getElementById("voiceOption").appendChild(option);
+        }
     }
 
-    
-  }
+
+}
 
 
 
@@ -303,9 +313,9 @@ document.getElementById("voiceOption").onchange = function (event) {
 
 }
 
-document.getElementById("TimerCheck").onchange = function(event){
+document.getElementById("TimerCheck").onchange = function (event) {
     timerFlag = event.target.checked;
-    console.log("timerFlag = "+timerFlag);
+    //console.log("timerFlag = " + timerFlag);
 }
 
 
@@ -324,33 +334,32 @@ function timeConverter(t) {
     var hours = "0";
     var minutes = Math.floor(t / 60);
     var seconds = t - minutes * 60;
-  
+
     if (seconds < 10) {
-      seconds = "0" + seconds;
+        seconds = "0" + seconds;
     }
-  
+
     if (minutes === 0) {
-      minutes = "00";
+        minutes = "00";
     } else if (minutes < 10) {
-      minutes = "0" + minutes;
+        minutes = "0" + minutes;
     }
-  
+
     return minutes + ":" + seconds;
 }
 
-function startTimer(t){
+function startTimer(t) {
     let gametime = t;
-    GameTimerInterval = setInterval(function(){
+    GameTimerInterval = setInterval(function () {
         gametime -= 1;
         document.getElementById('Timer').innerText = timeConverter(gametime);
-        if(gametime == 0){
-            clearInterval(GameTimerInterval);
-            alert("you lost!!");
-            
+        if (gametime == 0) {
+            userLost();
+
         }
     }, 1000);
 }
 
-function stopTimer(){
+function stopTimer() {
     clearInterval(GameTimerInterval);
 }
