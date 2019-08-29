@@ -4,7 +4,7 @@ const Devil = 'https://media.giphy.com/media/l3V0BFYUP1OUsYoMw/giphy.gif';
 
 //sample list of characters;
 //const Images= ["emoji_1.jpg", "emoji_2.jpg", "emoji_3.jpg", "emoji_4.jpg", "devil_2.jpg","emoji_5.jpg" ];
-const charactersList = ["superhero", "dogs", "cats", "tom and jerry", "flogs", "clown"];
+const charactersList = ["dogs", "superhero", "cats", "tom and jerry", "flogs", "clown"];
 
 
 //Giphy api
@@ -18,8 +18,12 @@ const backgroundImage = [{name:"Devil_1", url:"https://media.giphy.com/media/OqW
                           {name: "Devil_3", url : "https://media.giphy.com/media/4az7CzgqIsvCM/giphy-downsized.gif"}, 
                           {name: "Devil_4", url : "https://media.giphy.com/media/N7vOlvO34yVCo/giphy.gif "},
                           {name: "Devil_5", url : "https://media.giphy.com/media/2Dp76judYfq3S/giphy.gif"},
-                          {name: "Devil_6", url : "https://media.giphy.com/media/AGC0GkBRX8Y48/giphy.gif"}
+                          {name: "Devil_6", url : "https://media.giphy.com/media/AGC0GkBRX8Y48/giphy.gif"},
+                          {name: "Devil_6", url : "https://media.giphy.com/media/JvkKjnIlKQE9i/giphy.gif"}
+                          
                         ];
+const WinMessage = ["Congratulation you passed level 1", ""];
+const LostMessage = [""]
 
 let Characters = [];
 let CharactersEvilIndex = [];
@@ -117,10 +121,6 @@ function search(num, query){
 
 
 
-
-
-
-
 function displayImages(data, devilIndex){
     
     let listImg = data.map((img, i) => {
@@ -173,6 +173,10 @@ function gameplay(event){
     console.log("gameScore= ", gameScore, " Charac = ", Characters.length, " evil= ", CharactersEvilIndex.length);
     if(gameScore === (Characters.length - CharactersEvilIndex.length)){
         gameLevel += 1;
+        document.getElementById("WinSound").play();
+        speak(function(){
+            return 'Congratulation, you kill it! Click on continue to go to level '+ gameLevel;
+        });
         // alert("you win! ready for next level"+gameLevel);
         setTimeout(function(){
             $("#modal_btn").text("Continue");
@@ -230,9 +234,6 @@ function openNav() {
 
 
   //speech synthesis!!!
-
-  
-
   const synth = window.speechSynthesis;
 
   const speak = (action) => {
@@ -240,8 +241,25 @@ function openNav() {
     synth.speak(utterThis);
   };
 
+  function populateVoiceList() {
+    voices = synth.getVoices();
+  
+    for(i = 0; i < voices.length ; i++) {
+      var option = document.createElement('option');
+      option.textContent = voices[i].name + ' (' + voices[i].lang + ')';
+      
+      if(voices[i].default) {
+        option.textContent += ' -- DEFAULT';
+      }
+  
+      option.setAttribute('data-lang', voices[i].lang);
+      option.setAttribute('data-name', voices[i].name);
+      voiceSelect.appendChild(option);
+    }
+  }
+
   const looser = () => {
-    let message = "You might start running because the devil is after you!";
+    let message = "You must start running because the devil is after you! or click on try again to beat the Devil!";
     return message;
   };
 
@@ -254,13 +272,13 @@ function openNav() {
   //options 
 document.getElementById("BackgroundImg").onchange = function(event){
     
-    document.getElementById("bodyId").setAttribute("background-image", event.target.value);
+    document.body.style.backgroundImage = "url("+event.target.value+")";
 }
 
 
 document.getElementById("CharacterOption").onchange = function(event){
     gameCharacter = event.target.value;
-    console.log(gameCharacter);
+    
 }
 
 var typed = new Typed('#typed', {
@@ -275,5 +293,3 @@ var typed = new Typed('#typed', {
   });
 
 
-//start the game
-//getGiphy(gameLevel, gameCharacter);

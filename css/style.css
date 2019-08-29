@@ -9,6 +9,8 @@ body{
     align-content: center;
     height: 100px;
     width: 100%;
+    font-size: 1.5rem;
+    font-weight: bolder;
     padding:30px;
     margin-bottom: 40px;
     align-content: center;
@@ -16,24 +18,27 @@ body{
     
 }
 
-.GameStats{
-    width: 50%;
-    display: inline-block;
+/* .GameStats{
     text-align: center;
-    clear: both;
+    display: inline-block;
 }
 
 .leftSide{
-    width: 25%;
     text-align: left;
-    float: left;
+    display: inline-block;
 }
+*/
 
 .rightSide{
-    width: 25%;
-    text-align: right;
-    float: right;
-}
+  display: inline;
+  position: absolute;
+  top: 20px;
+  right: 30px;
+    
+   
+    
+} 
+
 .btn{
   font-weight: bolder;
   font-size: 1.2rem;
@@ -96,7 +101,10 @@ body{
 }
 
 
-
+.divider{
+  border: 5px solid blueviolet;
+  margin-bottom: 30px;
+}
 /* The side navigation menu */
 .sidenav {
     padding: 10px;
@@ -109,7 +117,7 @@ body{
     background-color: #111; /* Black*/
     color:rgb(255, 255,255);
     font-weight: bold;
-    font-size: 1.2em;
+    font-size: 1.4em;
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 60px; /* Place content 60px from the top */
     transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
