@@ -33,7 +33,7 @@ let gameCharacter = "dog";
 let voiceCharacter = 0;
 let timerFlag = false;
 let GameTimerInterval = null;
-let timeInterval = null;
+//let timeInterval = null;
 //speech synthesis!!!
 
 
@@ -58,21 +58,28 @@ document.getElementById("bodyId").onload = function () {
 
 function getGiphy(level, character) {
     //console.log('character test: ', character);
-    stopTimer();// clear the GameTimerInterval variable.
-    clearInterval(timeInterval); // clear timeInterval before a new game starts.  
-    document.getElementById("timerLabel").innerText = "Game starts in : ";
-    document.getElementById("timerBox").style.display = "block";
+    //stopTimer();// clear the GameTimerInterval variable.
+    //clearInterval(timeInterval); // clear timeInterval before a new game starts.
+
+    // document.getElementById("timerLabel").innerText = "Game starts in : ";
+    // document.getElementById("timerBox").style.display = "block";
+
+    //call search function to fetch characters from Giphy api. 
+    //Also fetch devil characters.
+    console.log("passed test 1");
     const promiseImg = [search(level * 3 + 5, character), search(level * 2, 'devil')];
-    Promise.all(promiseImg)
+    return Promise.all(promiseImg)
         .then(data => {
+
+            console.log("passed test 2");
             const CharactersImg = data[0].data.map(img => img.images.fixed_height_still.url);
             let CharactersEvil = data[1].data.map(img => img.images.fixed_height_still.url);
-            //CharactersEvil = CharactersEvil.splice(5);
+
             Characters = shuffle(CharactersImg);
             CharactersEvilIndex = [];
+
             //randomly pick position of devil card;
             let charLen = Characters.length + CharactersEvil.length;
-
             while (CharactersEvilIndex.length < CharactersEvil.length) {
                 let indexEvil = Math.floor(Math.random() * (charLen));
                 if (!CharactersEvilIndex.includes(indexEvil)) {
@@ -81,45 +88,72 @@ function getGiphy(level, character) {
                 }
             }
 
+            //sort devil CharactersEvilIndex and add then to character List:
+            // replacing devil by static imagic for test only: 
+            CharactersEvil = CharactersEvil.map(evil => "./images/devil_3.jpg");
 
             CharactersEvilIndex.sort(function (a, b) { return a - b });
+            let j = 0;
             for (let i = 0; i < charLen; i++) {
                 if (CharactersEvilIndex.includes(i)) {
-                    Characters.splice(i, 0, "./images/devil_3.jpg");
+                    Characters.splice(i, 0, CharactersEvil[j]);
+                    j += 1;
                 }
 
             }
 
+            //renders images to the DOM
             displayImages(Characters, CharactersEvilIndex);
-            let timer = 5;
-             timeInterval = setInterval(function () {
-        
-                 console.log("timer: "+ timer);
-                document.getElementById('Timer').innerText = timeConverter(timer);
-                if (timer === 0) {
-                    clearInterval(timeInterval);
-                    if (!timerFlag) {
-                        document.getElementById("timerBox").style.display = "none";
-                    } else {
-                        document.getElementById("timerLabel").innerText = "Timer: ";
-                        startTimer(level*2+3);
-                        //rememeber to clock to the timer when win, lost or restart by clearing
-                    }
 
-                    flipImage(Characters);
-                    for (let i = 0; i < Characters.length; i++) {
-                        if (CharactersEvilIndex.includes(i)) {
-                            document.getElementById("card_" + i).addEventListener("click", gameOver);
-                        } else {
-                            document.getElementById("card_" + i).addEventListener("click", gameplay);
-                        }
 
-                    }
+            
+            flipImage(Characters);
+            for (let i = 0; i < Characters.length; i++) {
+                if (CharactersEvilIndex.includes(i)) {
+                    document.getElementById("card_" + i).addEventListener("click", gameOver);
+                } else {
+                    document.getElementById("card_" + i).addEventListener("click", gameplay);
                 }
-                timer -= 1;
-            }, 1000);
 
-        })
+            }
+
+
+            let timer = 5;
+            // let timeInterval = setInterval(function () {
+
+            //     console.log("timer: " + timer);
+            //      document.getElementById('Timer').innerText = timeConverter(timer);
+                
+                
+            //     // if (timer === 0) {
+            //     //     clearInterval(timeInterval);
+            //     //     // if (!timerFlag) {
+            //     //     //     document.getElementById("timerBox").style.display = "none";
+            //     //     // } else {
+            //     //     //     document.getElementById("timerLabel").innerText = "Timer: ";
+            //     //     //     startTimer(level*2+3);
+            //     //     //     //rememeber to clock to the timer when win, lost or restart by clearing
+            //     //     // }
+
+            //     //     flipImage(Characters);
+            //     //     for (let i = 0; i < Characters.length; i++) {
+            //     //         if (CharactersEvilIndex.includes(i)) {
+            //     //             document.getElementById("card_" + i).addEventListener("click", gameOver);
+            //     //         } else {
+            //     //             document.getElementById("card_" + i).addEventListener("click", gameplay);
+            //     //         }
+
+            //     //     }
+            //     // }
+
+            //     if(timer == 0){
+            //         clearInterval(timeInterval);
+            //     }
+
+            //     timer -= 1;
+            // }, 1000);
+           // console.log("timeInterval = ", timeInterval);
+        });
 
 }
 
@@ -131,6 +165,7 @@ function gameStarter() {
         getGiphy(gameLevel, gameCharacter);
     }
 }
+
 gameStarter();
 
 
@@ -200,10 +235,10 @@ function gameplay(event) {
 }
 
 function userWin() {
-    stopTimer();
-    clearInterval(timeInterval);
+    //stopTimer();
+    //clearInterval(timeInterval);
     document.getElementById("WinSound").play();
-    synthSpeak("Congratulation, you kill it! Click on continue to go to level " + gameLevel);
+    //synthSpeak("Congratulation, you kill it! Click on continue to go to level " + gameLevel);
     $("#modal_btn").text("Continue");
     $("#modal_title").text("Good Job!!!!");
     $("#modal_body").text("You beat the Devil. You are ready for the next step! \n\n Click Continue to go to level " + gameLevel);
@@ -212,7 +247,7 @@ function userWin() {
     gameScore = 0;
     $("#modal_btn").on("click", function () {
         $("#myModal").modal("hide");
-        getGiphy(gameLevel, gameCharacter);
+        // getGiphy(gameLevel, gameCharacter);
     });
     // }, 500);
 }
@@ -226,11 +261,11 @@ function gameOver() {
 }
 
 function userLost() {
-    stopTimer();
-    clearInterval(timeInterval);
+    //stopTimer();
+    //clearInterval(timeInterval);
     document.getElementById("LooseSound").play();
     //setTimeout(function () {
-    synthSpeak("You must start running because the devil is after you! or click on try again to beat the Devil!");
+    //synthSpeak("You must start running because the devil is after you! or click on try again to beat the Devil!");
     $("#modal_btn").text("Try Again!");
     $("#modal_title").text("You Loose!");
     $("#modal_body").text("You have been catch by the devil!\n Sorry you can't move to the next step\n\n try again and don't click of the devil");
@@ -331,7 +366,7 @@ var typed = new Typed('#typed', {
 
 /* ---------------time converter -----------------*/
 function timeConverter(t) {
-    var hours = "0";
+
     var minutes = Math.floor(t / 60);
     var seconds = t - minutes * 60;
 
@@ -361,5 +396,7 @@ function startTimer(t) {
 }
 
 function stopTimer() {
+    console.log(" GameTimerInterval before closed= " + GameTimerInterval);
     clearInterval(GameTimerInterval);
+    console.log(" GameTimerInterval after closed= " + GameTimerInterval);
 }
