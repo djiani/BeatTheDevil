@@ -87,7 +87,7 @@ function getGiphy(level, character) {
             displayImages(Characters, CharactersEvilIndex);
             let timer = 5;
             let timeInterval = setInterval(function () {
-                document.getElementById('Timer').innerText = timer;
+                document.getElementById('Timer').innerText = timeConverter(timer);
                 if (timer === 0) {
                     clearInterval(timeInterval);
                     flipImage(Characters);
@@ -312,3 +312,35 @@ var typed = new Typed('#typed', {
 });
 
 
+//time converter
+function timeConverter(t) {
+    var minutes = Math.floor(t / 60);
+    var seconds = t - minutes * 60;
+  
+    if (seconds < 10) {
+      seconds = "0" + seconds;
+    }
+  
+    if (minutes === 0) {
+      minutes = "00";
+    } else if (minutes < 10) {
+      minutes = "0" + minutes;
+    }
+  
+    return minutes + ":" + seconds;
+}
+
+
+// TimeInterval = null;
+// startClock = (time)=>{
+//     TimeInterval = setInterval(() => {
+//         document.getElementById("Timer").innerText = timeConverter(time);
+//     }, 1);
+// }
+
+// stopClock = ()=>{
+//     clearInterval(this.TimeInterval);
+// }
+// reset = () =>{
+//     this.setState({timer:0});
+// }
