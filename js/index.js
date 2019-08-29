@@ -31,6 +31,8 @@ let gameScore = 0;
 let gameLevel = 1;
 let gameCharacter = "dog";
 let voiceCharacter = 0;
+let timerFlag = false;
+let GameTimerInterval = null;
 //speech synthesis!!!
 
 
@@ -54,9 +56,10 @@ document.getElementById("bodyId").onload = function () {
 
 
 function getGiphy(level, character) {
-    console.log('character test: ', character);
-
-    const promiseImg = [search(level * 3 + 5, character), search(level * 2, 'devil')]
+    //console.log('character test: ', character);
+    document.getElementById("timerLabel").innerText = "Game starts in : ";
+    document.getElementById("timerBox").style.display = "block";
+    const promiseImg = [search(level * 3 + 5, character), search(level * 2, 'devil')];
     Promise.all(promiseImg)
         .then(data => {
             const CharactersImg = data[0].data.map(img => img.images.fixed_height_still.url);
@@ -89,6 +92,14 @@ function getGiphy(level, character) {
             let timeInterval = setInterval(function () {
                 document.getElementById('Timer').innerText = timeConverter(timer);
                 if (timer === 0) {
+                    if(!timerFlag){
+                        document.getElementById("timerBox").style.display = "none";
+                    }else{
+                        document.getElementById("timerLabel").innerText = "Timer: ";
+                        //startTimer(level*2+3);
+                        //rememeber to clock to the timer when win, lost or restart by clearing
+                    }
+                    
                     clearInterval(timeInterval);
                     flipImage(Characters);
                     for (let i = 0; i < Characters.length; i++) {
@@ -179,12 +190,12 @@ function gameplay(event) {
     if (gameScore === (Characters.length - CharactersEvilIndex.length)) {
         gameLevel += 1;
         document.getElementById("WinSound").play();
-        synthSpeak("'Congratulation, you kill it! Click on continue to go to level ' + gameLevel");
+        synthSpeak("Congratulation, you kill it! Click on continue to go to level " + gameLevel);
         // alert("you win! ready for next level"+gameLevel);
         setTimeout(function () {
             $("#modal_btn").text("Continue");
             $("#modal_title").text("Good Job!!!!");
-            $("#modal_body").text("You beat the Devil. You are ready for the next step! \n\n Click Continue to go to");
+            $("#modal_body").text("You beat the Devil. You are ready for the next step! \n\n Click Continue to go to level " + gameLeve);
             $("#myModal").modal({ backdrop: true });
             $("#level").text(gameLevel);
             gameScore = 0;
@@ -198,13 +209,13 @@ function gameplay(event) {
 
 }
 
-
+/*---------------------------- gameOver  function -----------------*/
 function gameOver() {
     let id = event.target.getAttribute("data-index");
     document.getElementById("card_" + Number(id)).src = Characters[Number(id)];
     document.getElementById("LooseSound").play();
 
-    setTimeout(function () {
+    //setTimeout(function () {
         synthSpeak("You must start running because the devil is after you! or click on try again to beat the Devil!");
         $("#modal_btn").text("Try Again!");
         $("#modal_title").text("You Loose!");
@@ -217,38 +228,30 @@ function gameOver() {
             getGiphy(gameLevel, gameCharacter);
         });
 
-    }, 500);
+    //}, 500);
 
 }
 
 
 
 
-
-/* Set the width of the side navigation to 250px */
+/*----------Side bar nagivation function -----------------*/
 function openNav() {
     document.getElementById("mySidenav").style.width = "250px";
 }
 
-/* Set the width of the side navigation to 0 */
 function closeNav() {
     document.getElementById("mySidenav").style.width = "0";
 }
 
 
-
-
-// const speak = (action) => {
-//     utterThis = new SpeechSynthesisUtterance(action());
-//     synth.speak(utterThis);
-// }
-;
-
+/*------speech synthesis ----------------------*/
 const synth = window.speechSynthesis;
-voices = synth.getVoices();
+//voices = synth.getVoices();
 
+//Synthesys speak function
+//@param message: text to speak out 
 function  synthSpeak(message) {
-
     var msg = new SpeechSynthesisUtterance();
     var voices = window.speechSynthesis.getVoices();
     msg.voice = voices[voiceCharacter];
@@ -256,12 +259,12 @@ function  synthSpeak(message) {
     speechSynthesis.speak(msg);
 };
 
+
+//generate voices options. retrieve only english voices  
   function populateVoiceList() {
-    voices = synth.getVoices();
-    console.log("voices="+voices.length);
+    let voices = synth.getVoices();
+    //console.log("voices="+voices.length);
     for(let i = 0; i < voices.length ; i++) {
-        console.log(voices[i].name);
-        console.log(voices[i].lang);
         if(voices[i].lang.includes("en")){
             var option = document.createElement('option');
             option.textContent = voices[i].name + ' (' + voices[i].lang + ')';
@@ -274,10 +277,7 @@ function  synthSpeak(message) {
               option.setAttribute('data-name', voices[i].name);
               option.setAttribute('value', i);
               document.getElementById("voiceOption").appendChild(option);
-         }
-      
-
-      
+         } 
     }
 
     
@@ -286,7 +286,7 @@ function  synthSpeak(message) {
 
 
 
-//options 
+/*----------settings options ------------------*/
 document.getElementById("BackgroundImg").onchange = function (event) {
 
     document.body.style.backgroundImage = "url(" + event.target.value + ")";
@@ -303,6 +303,13 @@ document.getElementById("voiceOption").onchange = function (event) {
 
 }
 
+document.getElementById("TimerCheck").onchange = function(event){
+    timerFlag = event.target.checked;
+    console.log("timerFlag = "+timerFlag);
+}
+
+
+/* ----------- invoking typedjs api for facing typing code---------------- */
 var typed = new Typed('#typed', {
     stringsElement: '#typed-strings',
     typeSpeed: 50,
@@ -312,8 +319,9 @@ var typed = new Typed('#typed', {
 });
 
 
-//time converter
+/* ---------------time converter -----------------*/
 function timeConverter(t) {
+    var hours = "0";
     var minutes = Math.floor(t / 60);
     var seconds = t - minutes * 60;
   
@@ -330,17 +338,19 @@ function timeConverter(t) {
     return minutes + ":" + seconds;
 }
 
+function startTimer(t){
+    let gametime = t;
+    GameTimerInterval = setInterval(function(){
+        gametime -= 1;
+        document.getElementById('Timer').innerText = timeConverter(gametime);
+        if(gametime == 0){
+            clearInterval(GameTimerInterval);
+            alert("you lost!!");
+            
+        }
+    }, 1000);
+}
 
-// TimeInterval = null;
-// startClock = (time)=>{
-//     TimeInterval = setInterval(() => {
-//         document.getElementById("Timer").innerText = timeConverter(time);
-//     }, 1);
-// }
-
-// stopClock = ()=>{
-//     clearInterval(this.TimeInterval);
-// }
-// reset = () =>{
-//     this.setState({timer:0});
-// }
+function stopTimer(){
+    clearInterval(GameTimerInterval);
+}

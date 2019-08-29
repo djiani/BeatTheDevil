@@ -22,52 +22,64 @@
         <a href="#" class="closebtn" onclick="closeNav()">&times;</a>
 
 
-        <h3>Game Settings</h3>
-        <hr class="divider">
+        <div class="mainSidenav">
+            <h3>Game Settings</h3>
+            <hr class="divider">
 
-        <div class="form-group">
-            <label for="BackgroundImg">Background</label>
-            <select class="form-control" id="BackgroundImg" name="BackgroundImg">
-            </select>
-        </div>
-
-        <div class="form-group" title="Pick your character for your next round!">
-            <label for="CharacterOption" >Characters</label>
-            <select class="form-control" id="CharacterOption" name="CharacterOption">
-            </select>
-        </div>
-
-        <div class="form-group" title="Pick your character for your next round!">
-                <label for="voiceOption" >Voices</label>
-                <select class="form-control" id="voiceOption" name="voiceOption"> 
+            <div class="form-group">
+                <label for="BackgroundImg">Background</label>
+                <select class="form-control" id="BackgroundImg" name="BackgroundImg">
                 </select>
             </div>
 
+            <div class="form-group" title="Pick your character for your next round!">
+                <label for="CharacterOption">Characters</label>
+                <select class="form-control" id="CharacterOption" name="CharacterOption">
+                </select>
+            </div>
 
-        
+            <div class="form-group" title="Pick your character for your next round!">
+                <label for="voiceOption">Voices</label>
+                <select class="form-control" id="voiceOption">
+                </select>
+            </div>
+
+            <div class="form-group" title="Pick your character for your next round!">
+                <label for="TimerCheck">Checkbox:</label>
+                <div class="form-control" >
+                      Timer:  <input type="checkbox"  id="TimerCheck" name="TimerCheck" >
+                </div>
+            </div>
+
+
+        </div>
+
+
+
     </div>
 
     <div class="container">
 
-            <div class="rightSide animated fadeInLeftBig delay-3s" onclick="openNav()">
-                    <button class=" btn btn-outline-info btn-lg"><i class="fa fa-cog fa-lg"></i> </button>
-            </div>
+        <div class="rightSide animated fadeInLeftBig delay-3s" onclick="openNav()">
+            <button class=" btn btn-outline-info btn-lg"><i class="fa fa-cog fa-lg"></i> </button>
+        </div>
         <div id="info" class="row">
-            <div class="col-sm-4 col-sx-12 leftSide animated lightSpeedIn delay-1s" >
+            <div class="col-sm-4 col-sx-12  animated lightSpeedIn delay-1s">
                 <h1><span class="badge badge-light"> Level <span
                             class="badge badge-success  animated infinite tada delay-2s" id="level"> 1</span></span>
                 </h1>
             </div>
 
-            <div class="col-sm-4 col-sx-12 GameStats animated lightSpeedIn delay-1s">
-                <h1><span class="badge badge-light"> Timer: <span id="Timer"> 0 </span></span></h1>
+            <div class="col-sm-4 col-sx-12 animated lightSpeedIn delay-1s" id="timerBox">
+                <h1 class="badge badge-light"><span  id="timerLabel"> Game starts in :</span> <span id="Timer"> 0 </span>
+                </h1>
             </div>
-            
+
         </div>
 
-        
 
-        <div id="main"  class="animated fadeInUpBig delay-1s">
+
+        <div id="main" class="animated fadeInUpBig delay-1s">
             <div class="Description">
                 <div id="typed-strings" class="animated zoomIn delay-1s">
                     <h1>Welcome my friend to the world of Evil!</h1>

@@ -39,6 +39,10 @@ body{
     
 } 
 
+#timerBox{
+  display:none;
+}
+
 .btn{
   font-weight: bolder;
   font-size: 1.2rem;
@@ -107,7 +111,7 @@ body{
 }
 /* The side navigation menu */
 .sidenav {
-    padding: 10px;
+    /* padding: 10px; */
     height: 100%; /* 100% Full-height */
     width: 0; /* 0 width - change this with JavaScript */
     position: fixed; /* Stay in place */
@@ -121,6 +125,12 @@ body{
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 60px; /* Place content 60px from the top */
     transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+  }
+
+  .mainSidenav{
+    width: 90%;
+    margin: 0 auto;
+    
   }
   
   /* The navigation menu links */
