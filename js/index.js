@@ -104,15 +104,20 @@ function getGiphy(level, character) {
 
             //renders images to the DOM
             displayImages(Characters, CharactersEvilIndex);
+            let timer = 5;
+            let timeInterval = setInterval(function () {
+                document.getElementById('Timer').innerText = timer;
+                if (timer === 0) {
+                    clearInterval(timeInterval);
+                    flipImage(Characters);
+                    for (let i = 0; i < Characters.length; i++) {
+                        if (CharactersEvilIndex.includes(i)) {
+                            document.getElementById("card_" + i).addEventListener("click", gameOver);
+                        } else {
+                            document.getElementById("card_" + i).addEventListener("click", gameplay);
+                        }
 
-
-            
-            flipImage(Characters);
-            for (let i = 0; i < Characters.length; i++) {
-                if (CharactersEvilIndex.includes(i)) {
-                    document.getElementById("card_" + i).addEventListener("click", gameOver);
-                } else {
-                    document.getElementById("card_" + i).addEventListener("click", gameplay);
+                    }
                 }
 
             }
@@ -364,39 +369,3 @@ var typed = new Typed('#typed', {
 });
 
 
-/* ---------------time converter -----------------*/
-function timeConverter(t) {
-
-    var minutes = Math.floor(t / 60);
-    var seconds = t - minutes * 60;
-
-    if (seconds < 10) {
-        seconds = "0" + seconds;
-    }
-
-    if (minutes === 0) {
-        minutes = "00";
-    } else if (minutes < 10) {
-        minutes = "0" + minutes;
-    }
-
-    return minutes + ":" + seconds;
-}
-
-function startTimer(t) {
-    let gametime = t;
-    GameTimerInterval = setInterval(function () {
-        gametime -= 1;
-        document.getElementById('Timer').innerText = timeConverter(gametime);
-        if (gametime == 0) {
-            userLost();
-
-        }
-    }, 1000);
-}
-
-function stopTimer() {
-    console.log(" GameTimerInterval before closed= " + GameTimerInterval);
-    clearInterval(GameTimerInterval);
-    console.log(" GameTimerInterval after closed= " + GameTimerInterval);
-}
