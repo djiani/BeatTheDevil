@@ -33,6 +33,7 @@ let voiceCharacter = 0;
 let timerFlag = false;
 let GameTimerInterval = null;
 let gameTime = 0;
+let DefaultDevilFlag = false;
 //let timeInterval = null;
 //speech synthesis!!!
 
@@ -88,9 +89,13 @@ function getGiphy(level, character) {
                 }
             }
 
+            
+            //setting to static devil images if checked
+            if(DefaultDevilFlag){
+                CharactersEvil = CharactersEvil.map(evil => "./images/devil_3.jpg");
+            }
+            
             //sort devil CharactersEvilIndex and add then to character List:
-            // replacing devil by static imagic for test only: 
-            //CharactersEvil = CharactersEvil.map(evil => "./images/devil_3.jpg");
             CharactersEvilIndex.sort(function (a, b) { return a - b });
             let j = 0;
             for (let i = 0; i < charLen; i++) {
@@ -368,6 +373,11 @@ document.getElementById("voiceOption").onchange = function (event) {
 
 document.getElementById("TimerCheck").onchange = function (event) {
     timerFlag = event.target.checked;
+    //console.log("timerFlag = " + timerFlag);
+}
+
+document.getElementById("DefaultDevil").onchange = function (event) {
+    DefaultDevilFlag = event.target.checked;
     //console.log("timerFlag = " + timerFlag);
 }
 

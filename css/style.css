@@ -145,6 +145,12 @@ body{
     margin-left: 50px;
   }
 
+  #TimerCheck, #DefaultDevil{
+    width: 28px;
+    height: 18px;
+    float: right;
+  }
+
   
   
   @media screen and (max-height: 450px) {
