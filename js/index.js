@@ -14,11 +14,10 @@ const url = "https://api.giphy.com/v1/gifs/search?api_key=5f2qiYkKasRM65bApSg9R4
 
 //list of background images
 const backgroundImage = [{ name: "Devil_1", url: "https://media.giphy.com/media/OqWm9N0jJoqCQ/giphy.gif" },
-{ name: "Devil_2", url: "https://media.giphy.com/media/ftcujiuHpxAME/giphy.gif" },
-{ name: "Devil_3", url: "https://media.giphy.com/media/4az7CzgqIsvCM/giphy-downsized.gif" },
-{ name: "Devil_4", url: "https://media.giphy.com/media/N7vOlvO34yVCo/giphy.gif " },
-{ name: "Devil_5", url: "https://media.giphy.com/media/2Dp76judYfq3S/giphy.gif" },
-{ name: "Devil_6", url: "https://media.giphy.com/media/AGC0GkBRX8Y48/giphy.gif" },
+{ name: "Devil_2", url: "https://media.giphy.com/media/4az7CzgqIsvCM/giphy-downsized.gif" },
+{ name: "Devil_3", url: "https://media.giphy.com/media/N7vOlvO34yVCo/giphy.gif " },
+{ name: "Devil_4", url: "https://media.giphy.com/media/2Dp76judYfq3S/giphy.gif" },
+{ name: "Devil_5", url: "https://media.giphy.com/media/AGC0GkBRX8Y48/giphy.gif" },
 { name: "Devil_6", url: "https://media.giphy.com/media/JvkKjnIlKQE9i/giphy.gif" }
 
 ];
