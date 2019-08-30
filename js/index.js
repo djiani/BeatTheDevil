@@ -110,6 +110,7 @@ function getGiphy(level, character) {
                 document.getElementById('Timer').innerText = timeConverter(timer);
                 if (timer === 0) {
                     clearInterval(timeInterval);
+                    document.getElementById("timerBox").style.display = "none";
                     flipImage(Characters);
                     for (let i = 0; i < Characters.length; i++) {
                         if (CharactersEvilIndex.includes(i)) {
