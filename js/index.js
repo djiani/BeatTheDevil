@@ -89,10 +89,8 @@ function getGiphy(level, character) {
             }
 
             //sort devil CharactersEvilIndex and add then to character List:
-
             // replacing devil by static imagic for test only: 
             //CharactersEvil = CharactersEvil.map(evil => "./images/devil_3.jpg");
-
             CharactersEvilIndex.sort(function (a, b) { return a - b });
             let j = 0;
             for (let i = 0; i < charLen; i++) {

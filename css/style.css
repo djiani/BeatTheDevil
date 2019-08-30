@@ -13,9 +13,7 @@ body{
     font-weight: bolder;
     padding:30px;
     margin-bottom: 40px;
-    align-content: center;
-
-    
+    align-content: center;  
 }
 
 /* .GameStats{
@@ -50,10 +48,9 @@ body{
 
 
 #main{
-    width: 80vw;
     height: 100%;
     margin: 20px auto;
-    padding: 20px;
+    padding: 40px;
     text-align: center;
     
 }
@@ -83,10 +80,10 @@ body{
     
 }
 
-.cardImg:hover{
+/* .cardImg:hover{
   animation-duration: 2s;
   animation-delay: 1s;
-}
+} */
 
 .imgSize{
     width: 100%;
@@ -96,7 +93,7 @@ body{
 
 .animatedCard{
     animation-duration: 2s; 
-    /* animation-delay: 1s; */
+    animation-delay: faster;
     
 }
 
@@ -132,16 +129,7 @@ body{
     margin: 0 auto;
     
   }
-  
-  /* The navigation menu links */
-  /* .sidenav a {
-    padding: 8px 8px 8px 32px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #818181;
-    display: block;
-    transition: 0.3s;
-  } */
+
   
   /* When you mouse over the navigation links, change their color */
   .sidenav a:hover {
@@ -159,16 +147,66 @@ body{
 
   
   
-  /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
-  /* #main {
-    transition: margin-left .5s;
-    padding: 20px;
-  } */
-  
-  /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
   @media screen and (max-height: 450px) {
-    .sidenav {padding-top: 15px;}
-    .sidenav a {font-size: 18px;}
+    .sidenav {
+      padding-top: 15px;
+    }
+    .sidenav a {
+      font-size: 18px;
+    }
+}
+
+@media only screen and (max-width: 576px) {
+  #info{
+    font-size: 1.1rem;
+    padding:10px;
+    margin-bottom: 20px;  
+}
+  .cardImg{
+    width: 50px;
+    height: 50px; 
+    border-radius: 5px; 
   }
 
+  .DivstartGame, .Description{
+    margin:5px auto;
+    font-size: 1.1rem;
+  }
+  #main{
+    margin: 10px auto;
+    padding: 10px;
+  }
+  .imgSize{
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+  }
 
+  .evil{
+    border: 5px solid red;
+  }
+
+}
+
+
+@media only screen and (max-width: 768px) {
+  #info{
+    font-size: 1.3rem;
+    padding:15px;
+    margin-bottom: 20px;  
+}
+
+  .cardImg{
+    width: 70px;
+    height: 70px; 
+    border-radius: 10px; 
+  }
+
+  .DivstartGame, .Description{
+    margin:5px auto;
+    font-size: 1.5rem;
+  }
+ 
+
+
+}
