@@ -61,14 +61,14 @@ function getGiphy(level, character) {
     //stopTimer();// clear the GameTimerInterval variable.
     //clearInterval(timeInterval); // clear timeInterval before a new game starts.
 
-    // document.getElementById("timerLabel").innerText = "Game starts in : ";
-    // document.getElementById("timerBox").style.display = "block";
+    document.getElementById("timerLabel").innerText = "Game starts in : ";
+    document.getElementById("timerBox").style.display = "block";
 
     //call search function to fetch characters from Giphy api. 
     //Also fetch devil characters.
     console.log("passed test 1");
     const promiseImg = [search(level * 3 + 5, character), search(level * 2, 'devil')];
-    return Promise.all(promiseImg)
+     Promise.all(promiseImg)
         .then(data => {
 
             console.log("passed test 2");
@@ -119,11 +119,13 @@ function getGiphy(level, character) {
 
                     }
                 }
+                timer -=1;
 
-            }
+            }, 1000);
+        });
+}
 
-
-            let timer = 5;
+            // let timer = 5;
             // let timeInterval = setInterval(function () {
 
             //     console.log("timer: " + timer);
@@ -158,9 +160,9 @@ function getGiphy(level, character) {
             //     timer -= 1;
             // }, 1000);
            // console.log("timeInterval = ", timeInterval);
-        });
+      // );
 
-}
+//}
 
 
 /* --- start game on  StartGameBtn click event */
@@ -243,7 +245,7 @@ function userWin() {
     //stopTimer();
     //clearInterval(timeInterval);
     document.getElementById("WinSound").play();
-    //synthSpeak("Congratulation, you kill it! Click on continue to go to level " + gameLevel);
+    synthSpeak("Congratulation, you kill it! Click on continue to go to level " + gameLevel);
     $("#modal_btn").text("Continue");
     $("#modal_title").text("Good Job!!!!");
     $("#modal_body").text("You beat the Devil. You are ready for the next step! \n\n Click Continue to go to level " + gameLevel);
@@ -252,7 +254,7 @@ function userWin() {
     gameScore = 0;
     $("#modal_btn").on("click", function () {
         $("#myModal").modal("hide");
-        // getGiphy(gameLevel, gameCharacter);
+        getGiphy(gameLevel, gameCharacter);
     });
     // }, 500);
 }
@@ -270,7 +272,7 @@ function userLost() {
     //clearInterval(timeInterval);
     document.getElementById("LooseSound").play();
     //setTimeout(function () {
-    //synthSpeak("You must start running because the devil is after you! or click on try again to beat the Devil!");
+    synthSpeak("You must start running because the devil is after you! or click on try again to beat the Devil!");
     $("#modal_btn").text("Try Again!");
     $("#modal_title").text("You Loose!");
     $("#modal_body").text("You have been catch by the devil!\n Sorry you can't move to the next step\n\n try again and don't click of the devil");
