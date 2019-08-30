@@ -34,8 +34,7 @@ let timerFlag = false;
 let GameTimerInterval = null;
 let gameTime = 0;
 let DefaultDevilFlag = false;
-//let timeInterval = null;
-//speech synthesis!!!
+
 
 
 document.getElementById("bodyId").onload = function () {
@@ -270,6 +269,7 @@ function userWin() {
     $("#modal_btn").on("click", function () {
         $("#myModal").modal("hide");
         getGiphy(gameLevel, gameCharacter);
+        synth.cancel();
     });
     // }, 500);
 }
@@ -298,6 +298,7 @@ function userLost() {
     $("#modal_btn").on("click", function () {
         $("#myModal").modal("hide");
         getGiphy(gameLevel, gameCharacter);
+        synth.cancel();
     });
 }
 
