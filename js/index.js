@@ -89,8 +89,9 @@ function getGiphy(level, character) {
             }
 
             //sort devil CharactersEvilIndex and add then to character List:
+
             // replacing devil by static imagic for test only: 
-            CharactersEvil = CharactersEvil.map(evil => "./images/devil_3.jpg");
+            //CharactersEvil = CharactersEvil.map(evil => "./images/devil_3.jpg");
 
             CharactersEvilIndex.sort(function (a, b) { return a - b });
             let j = 0;
@@ -106,7 +107,7 @@ function getGiphy(level, character) {
             displayImages(Characters, CharactersEvilIndex);
             let timer = 5;
             let timeInterval = setInterval(function () {
-                document.getElementById('Timer').innerText = timer;
+                document.getElementById('Timer').innerText = timeConverter(timer);
                 if (timer === 0) {
                     clearInterval(timeInterval);
                     flipImage(Characters);
@@ -224,6 +225,7 @@ function gameplay(event) {
     let id = event.target.getAttribute("data-index");
     document.getElementById("card_" + Number(id)).src = Characters[Number(id)];
     let elt = document.getElementById("card_" + Number(id)).parentElement;
+    
     if (elt.classList.contains("rollIn")) {
         elt.classList.remove("rollIn");
         elt.classList.add("heartBeat", "animatedCard");
@@ -231,11 +233,13 @@ function gameplay(event) {
 
 
     gameScore++;
+    document.getElementById("UnMatch").innerText = (Characters.length - CharactersEvilIndex.length)- gameScore;
     document.getElementById("clapSound").play();
     //number of devil per level is gameLevel*2+1;
     //console.log("gameScore= ", gameScore, " Charac = ", Characters.length, " evil= ", CharactersEvilIndex.length);
     if (gameScore === (Characters.length - CharactersEvilIndex.length)) {
         gameLevel += 1;
+        document.getElementById("UnMatch").innerText = "0";
         userWin();
     }
 
@@ -263,6 +267,7 @@ function userWin() {
 function gameOver() {
     let id = event.target.getAttribute("data-index");
     document.getElementById("card_" + Number(id)).src = Characters[Number(id)];
+    document.getElementById("UnMatch").innerText = "0";
     userLost();
 
 }
@@ -304,8 +309,8 @@ const synth = window.speechSynthesis;
 //Synthesys speak function
 //@param message: text to speak out 
 function synthSpeak(message) {
-    var msg = new SpeechSynthesisUtterance();
-    var voices = window.speechSynthesis.getVoices();
+    let msg = new SpeechSynthesisUtterance();
+    let voices = window.speechSynthesis.getVoices();
     msg.voice = voices[voiceCharacter];
     msg.text = message;
     speechSynthesis.speak(msg);
@@ -318,7 +323,7 @@ function populateVoiceList() {
     //console.log("voices="+voices.length);
     for (let i = 0; i < voices.length; i++) {
         if (voices[i].lang.includes("en")) {
-            var option = document.createElement('option');
+            let option = document.createElement('option');
             option.textContent = voices[i].name + ' (' + voices[i].lang + ')';
 
             if (voices[i].default) {
@@ -362,12 +367,32 @@ document.getElementById("TimerCheck").onchange = function (event) {
 
 
 /* ----------- invoking typedjs api for facing typing code---------------- */
-var typed = new Typed('#typed', {
+let typed = new Typed('#typed', {
     stringsElement: '#typed-strings',
     typeSpeed: 50,
     loop: true,
     loopCount: Infinity,
 
 });
+
+
+/* ---------------time converter -----------------*/
+function timeConverter(t) {
+
+    let minutes = Math.floor(t / 60);
+    let seconds = t - minutes * 60;
+
+    if (seconds < 10) {
+        seconds = "0" + seconds;
+    }
+
+    if (minutes === 0) {
+        minutes = "00";
+    } else if (minutes < 10) {
+        minutes = "0" + minutes;
+    }
+
+    return minutes + ":" + seconds;
+}
 
 
