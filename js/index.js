@@ -33,6 +33,7 @@ let gameCharacter = "dog";
 let voiceCharacter = 0;
 let timerFlag = false;
 let GameTimerInterval = null;
+let gameTime = 0;
 //let timeInterval = null;
 //speech synthesis!!!
 
@@ -68,7 +69,7 @@ function getGiphy(level, character) {
     //Also fetch devil characters.
     console.log("passed test 1");
     const promiseImg = [search(level * 3 + 5, character), search(level * 2, 'devil')];
-     Promise.all(promiseImg)
+    Promise.all(promiseImg)
         .then(data => {
 
             console.log("passed test 2");
@@ -110,7 +111,14 @@ function getGiphy(level, character) {
                 document.getElementById('Timer').innerText = timeConverter(timer);
                 if (timer === 0) {
                     clearInterval(timeInterval);
-                    document.getElementById("timerBox").style.display = "none";
+
+                    if (!timerFlag) {
+                        document.getElementById("timerBox").style.display = "none";
+                    } else {
+                        document.getElementById("timerLabel").innerText = "Timer: coming ...";
+                        //startTimer();
+                        //rememeber to clock to the timer when win, lost or restart by clearing
+                    }
                     flipImage(Characters);
                     for (let i = 0; i < Characters.length; i++) {
                         if (CharactersEvilIndex.includes(i)) {
@@ -121,48 +129,48 @@ function getGiphy(level, character) {
 
                     }
                 }
-                timer -=1;
+                timer -= 1;
 
             }, 1000);
         });
 }
 
-            // let timer = 5;
-            // let timeInterval = setInterval(function () {
+// let timer = 5;
+// let timeInterval = setInterval(function () {
 
-            //     console.log("timer: " + timer);
-            //      document.getElementById('Timer').innerText = timeConverter(timer);
-                
-                
-            //     // if (timer === 0) {
-            //     //     clearInterval(timeInterval);
-            //     //     // if (!timerFlag) {
-            //     //     //     document.getElementById("timerBox").style.display = "none";
-            //     //     // } else {
-            //     //     //     document.getElementById("timerLabel").innerText = "Timer: ";
-            //     //     //     startTimer(level*2+3);
-            //     //     //     //rememeber to clock to the timer when win, lost or restart by clearing
-            //     //     // }
+//     console.log("timer: " + timer);
+//      document.getElementById('Timer').innerText = timeConverter(timer);
 
-            //     //     flipImage(Characters);
-            //     //     for (let i = 0; i < Characters.length; i++) {
-            //     //         if (CharactersEvilIndex.includes(i)) {
-            //     //             document.getElementById("card_" + i).addEventListener("click", gameOver);
-            //     //         } else {
-            //     //             document.getElementById("card_" + i).addEventListener("click", gameplay);
-            //     //         }
 
-            //     //     }
-            //     // }
+//     // if (timer === 0) {
+//     //     clearInterval(timeInterval);
+//     //     // if (!timerFlag) {
+//     //     //     document.getElementById("timerBox").style.display = "none";
+//     //     // } else {
+//     //     //     document.getElementById("timerLabel").innerText = "Timer: ";
+//     //     //     startTimer(level*2+3);
+//     //     //     //rememeber to clock to the timer when win, lost or restart by clearing
+//     //     // }
 
-            //     if(timer == 0){
-            //         clearInterval(timeInterval);
-            //     }
+//     //     flipImage(Characters);
+//     //     for (let i = 0; i < Characters.length; i++) {
+//     //         if (CharactersEvilIndex.includes(i)) {
+//     //             document.getElementById("card_" + i).addEventListener("click", gameOver);
+//     //         } else {
+//     //             document.getElementById("card_" + i).addEventListener("click", gameplay);
+//     //         }
 
-            //     timer -= 1;
-            // }, 1000);
-           // console.log("timeInterval = ", timeInterval);
-      // );
+//     //     }
+//     // }
+
+//     if(timer == 0){
+//         clearInterval(timeInterval);
+//     }
+
+//     timer -= 1;
+// }, 1000);
+// console.log("timeInterval = ", timeInterval);
+// );
 
 //}
 
@@ -226,7 +234,7 @@ function gameplay(event) {
     let id = event.target.getAttribute("data-index");
     document.getElementById("card_" + Number(id)).src = Characters[Number(id)];
     let elt = document.getElementById("card_" + Number(id)).parentElement;
-    
+
     if (elt.classList.contains("rollIn")) {
         elt.classList.remove("rollIn");
         elt.classList.add("heartBeat", "animatedCard");
@@ -234,7 +242,7 @@ function gameplay(event) {
 
 
     gameScore++;
-    document.getElementById("UnMatch").innerText = (Characters.length - CharactersEvilIndex.length)- gameScore;
+    document.getElementById("UnMatch").innerText = (Characters.length - CharactersEvilIndex.length) - gameScore;
     document.getElementById("clapSound").play();
     //number of devil per level is gameLevel*2+1;
     //console.log("gameScore= ", gameScore, " Charac = ", Characters.length, " evil= ", CharactersEvilIndex.length);
@@ -247,7 +255,7 @@ function gameplay(event) {
 }
 
 function userWin() {
-    //stopTimer();
+    stopTimer();
     //clearInterval(timeInterval);
     document.getElementById("WinSound").play();
     synthSpeak("Congratulation, you kill it! Click on continue to go to level " + gameLevel);
@@ -274,7 +282,7 @@ function gameOver() {
 }
 
 function userLost() {
-    //stopTimer();
+    stopTimer();
     //clearInterval(timeInterval);
     document.getElementById("LooseSound").play();
     //setTimeout(function () {
@@ -396,4 +404,40 @@ function timeConverter(t) {
     return minutes + ":" + seconds;
 }
 
+function timeConverter2(t) {
 
+    let minutes = Math.floor(t / 60);
+    let seconds = t - minutes * 60;
+
+    if (seconds < 10) {
+        seconds = "0" + seconds;
+    }
+
+    if (minutes === 0) {
+        minutes = "00";
+    } else if (minutes < 10) {
+        minutes = "0" + minutes;
+    }
+
+    return minutes + ":" + seconds;
+}
+
+function startTimer() {
+    gameTime = 0;
+    GameTimerInterval = setInterval(function () {
+        gameTime += 1;
+        document.getElementById('Timer').innerText = timeConverter2(gameTime);
+        if(gameTime == 360) {
+            alert("Game take too long!!!");
+            gameTime = 0;
+
+        }
+
+    }, 1000);
+
+}
+
+function stopTimer() {
+    gameTime = 0;
+    clearInterval(GameTimerInterval);
+}
